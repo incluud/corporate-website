@@ -1,0 +1,267 @@
+:root {
+  color-scheme: light;
+  interpolate-size: allow-keywords;
+
+  // oklch colors
+  --lch-white: 100% 0 0;
+  --lch-gray-50: 21.76% 0.006 252.11;
+  --lch-gray-100: 30.74% 0.007 252.42;
+  --lch-gray-200: 35.4% 0.007 252.42;
+  --lch-gray-300: 49.41% 0.005 252.88;
+  --lch-gray-400: 54.03% 0.004 253.13;
+  --lch-gray-500: 58.64% 0.004 253.36;
+  --lch-gray-600: 63.82% 0.006 252.6;
+  --lch-gray-700: 73.29% 0.007 252.11;
+  --lch-gray-800: 82.75% 0.01 251.57;
+  --lch-gray-900: 91.23% 0.013 251.05;
+  --lch-gray-1000: 99.18% 0.013 251.05;
+  --lch-primary-100: 90.13% 0.164 306.39;
+  --lch-primary-200: 54.44% 0.325 306.39;
+  --lch-secondary-100: 83.31% 0.158 184.53;
+  --lch-secondary-200: 54.48% 0.158 184.53;
+  --lch-tertiary-100: 86.74% 0.172 84.56;
+  --lch-tertiary-200: 81.77% 0.199 84.56;
+  --lch-info: 55.93% 0.255 282.85;
+  --lch-error: 47.01% 0.283 14.12;
+  --lch-success: 51.34% 0.227 142.5;
+  --lch-warning: 84.46% 0.184 84.56;
+  --lch-contrast-black: 0% 0 0;
+  --lch-contrast-darkblue: 35.56% 0.237 264.05;
+  --lch-contrast-lightblue: 76.84% 0.183 231.61;
+  --lch-background-light: 90% 0 0;
+  --lch-background-dark: 10% 0 0;
+
+  // colors
+  --color-white: oklch(var(--lch-white));
+  --color-gray-50: oklch(var(--lch-gray-50));
+  --color-gray-100: oklch(var(--lch-gray-100));
+  --color-gray-200: oklch(var(--lch-gray-200));
+  --color-gray-300: oklch(var(--lch-gray-300));
+  --color-gray-400: oklch(var(--lch-gray-400));
+  --color-gray-500: oklch(var(--lch-gray-500));
+  --color-gray-600: oklch(var(--lch-gray-600));
+  --color-gray-700: oklch(var(--lch-gray-700));
+  --color-gray-800: oklch(var(--lch-gray-800));
+  --color-gray-900: oklch(var(--lch-gray-900));
+  --color-gray-1000: oklch(var(--lch-gray-1000));
+  --color-transparent: transparent;
+
+  // colors brand
+  --color-primary-100: hsl(272deg 100% 90% / 1);
+  --color-primary-200: hsl(272deg 100% 50% / 1);
+  --color-secondary-100: hsl(172deg 88% 63% / 1);
+  --color-secondary-200: hsl(172deg 88% 33% / 1);
+  --color-tertiary-100: hsl(40deg 100% 65% / 1);
+  --color-tertiary-200: hsl(40deg 100% 50% / 1);
+
+  // colors system
+  --color-info: light-dark(hsl(245deg 100% 60% / 1), hsl(245deg 100% 60% / 1));
+  --color-info-background: light-dark(hsl(205 92% 95% / 1), hsl(205 92% 15% / 1));
+  --color-error: light-dark(hsl(340deg 95% 39% / 1), hsl(340deg 95% 39% / 1));
+  --color-error-background: light-dark(hsl(0 84% 95% / 1), hsl(0 84% 15% / 1));
+  --color-success: light-dark(hsl(145deg 100% 27% / 1), hsl(145deg 100% 27% / 1));
+  --color-success-background: light-dark(hsl(138 52% 94% / 1), hsl(138 52% 15% / 1));
+  --color-warning: light-dark(hsl(37deg 100% 50% / 1), hsl(37deg 100% 50% / 1));
+  --color-warning-background: light-dark(hsl(35 100% 92% / 1), hsl(35 100% 15% / 1));
+
+  // colors contrast
+  --color-contrast-white: hsl(0deg 0% 100% / 1);
+  --color-contrast-black: hsl(0deg 0% 0% / 1);
+  --color-contrast-darkblue: hsl(240deg 100% 47% / 1);
+  --color-contrast-lightblue: hsl(200deg 100% 60% / 1);
+
+  // font families
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+
+  // font sizes
+  // @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,18,1.25,6,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12
+  --font-size--2: clamp(0.6944rem, 0.6855rem + 0.0446vw, 0.72rem);
+  --font-size--1: clamp(0.8331rem, 0.8099rem + 0.1163vw, 0.9rem);
+  --font-size-0: clamp(1rem, 0.9565rem + 0.2174vw, 1.125rem);
+  --font-size-1: clamp(1.2rem, 1.1283rem + 0.3587vw, 1.4063rem);
+  --font-size-2: clamp(1.44rem, 1.3293rem + 0.5533vw, 1.7581rem);
+  --font-size-3: clamp(1.7281rem, 1.5649rem + 0.8163vw, 2.1975rem);
+  --font-size-4: clamp(2.0738rem, 1.8396rem + 1.1707vw, 2.7469rem);
+  --font-size-5: clamp(2.4881rem, 2.1594rem + 1.6435vw, 3.4331rem);
+  --font-size-6: clamp(2.9863rem, 2.5323rem + 2.2696vw, 4.2913rem);
+  --font-size-7: clamp(3.5836rem, 2.9667rem + 3.0674vw, 5.3544rem);
+
+  // space
+  // @link https://utopia.fyi/space/calculator?c=320,16,1.2,1240,18,1.25,6,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,&g=s,l,xl,12
+  --space-4xs: clamp(0.125rem, 0.1131rem + 0.1087vw, 0.1563rem);
+  --space-3xs: clamp(0.25rem, 0.2283rem + 0.1087vw, 0.3125rem);
+  --space-2xs: clamp(0.5rem, 0.4783rem + 0.1087vw, 0.5625rem);
+  --space-xs: clamp(0.75rem, 0.7065rem + 0.2174vw, 0.875rem);
+  --space-s: clamp(1rem, 0.9565rem + 0.2174vw, 1.125rem);
+  --space-m: clamp(1.5rem, 1.4348rem + 0.3261vw, 1.6875rem);
+  --space-l: clamp(2rem, 1.913rem + 0.4348vw, 2.25rem);
+  --space-xl: clamp(3rem, 2.8696rem + 0.6522vw, 3.375rem);
+  --space-2xl: clamp(4rem, 3.8261rem + 0.8696vw, 4.5rem);
+  --space-3xl: clamp(6rem, 5.7391rem + 1.3043vw, 6.75rem);
+  --space-3xs-2xs: clamp(0.25rem, 0.1413rem + 0.5435vw, 0.5625rem);
+  --space-2xs-xs: clamp(0.5rem, 0.3696rem + 0.6522vw, 0.875rem);
+  --space-xs-s: clamp(0.75rem, 0.6196rem + 0.6522vw, 1.125rem);
+  --space-s-m: clamp(1rem, 0.7609rem + 1.1957vw, 1.6875rem);
+  --space-m-l: clamp(1.5rem, 1.2391rem + 1.3043vw, 2.25rem);
+  --space-l-xl: clamp(2rem, 1.5217rem + 2.3913vw, 3.375rem);
+  --space-xl-2xl: clamp(3rem, 2.4783rem + 2.6087vw, 4.5rem);
+  --space-2xl-3xl: clamp(4rem, 3.0435rem + 4.7826vw, 6.75rem);
+
+  // grid
+  // https://utopia.fyi/grid/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,s-l&g=s,l,xl,12
+  --grid-max-width: 90rem;
+  --grid-gutter: var(--space-s-l, clamp(1.125rem, 0.6467rem + 2.3913vw, 2.5rem));
+  --grid-columns: 12;
+
+  // border radius
+  --radius-xs: 0.125rem;
+  --radius-s: 0.25rem;
+  --radius-m: 0.5rem;
+  --radius-l: 0.75rem;
+  --radius-h: 1rem;
+
+  // elevations
+  --elevation-1: 0 1px 3px rgba(0 0 0 / 0.12);
+  --elevation-2: 0 3px 6px rgba(0 0 0 / 0.15);
+  --elevation-3: 0 10px 20px rgba(0 0 0 / 0.15);
+  --elevation-4: 0 15px 25px rgba(0 0 0 / 0.15);
+  --elevation-5: 0 20px 40px rgba(0 0 0 / 0.5);
+
+  // z-index
+  --z-index--1: -1;
+  --z-index-0: 0;
+  --z-index-1: 10;
+  --z-index-2: 20;
+  --z-index-3: 30;
+  --z-index-4: 40;
+  --z-index-5: 50;
+  --z-index-6: 60;
+  --z-index-7: 70;
+  --z-index-8: 80;
+  --z-index-9: 90;
+  --z-index-10: 100;
+
+  // aspects
+  --ratio-square: 1;
+  --ratio-landscape: 4/3;
+  --ratio-portrait: 3/4;
+  --ratio-widescreen: 16/9;
+  --ratio-ultrawide: 18/5;
+
+  // animations
+  --cubic-bezier: cubic-bezier(0.1, 0.1, 0, 1);
+  --animation-speed-slow: 0.6s;
+  --animation-speed-medium: 0.4s;
+  --animation-speed-fast: 0.25s;
+
+  // misc
+  --line-clamp: 3;
+  --target-size-min: 24px;
+  --target-size-max: 44px;
+  --backdrop-color: hsl(0deg 100% 0% / 0.75);
+  --backdrop-blur: blur(3px);
+
+  // defaults
+  --icon-color: light-dark(var(--color-gray-50), var(--color-white));
+  --text-color: light-dark(var(--color-gray-50), var(--color-white));
+  --link-color: light-dark(var(--color-primary-200), var(--color-primary-100));
+  --border-color: light-dark(var(--color-gray-900), var(--color-gray-100));
+  --background-color: light-dark(var(--color-white), var(--color-gray-50));
+  // --background-color: light-dark(oklch(var(--lch-background-light)), oklch(var(--lch-background-dark)));
+  --text-decoration-color: light-dark(var(--color-gray-700), var(--color-gray-100));
+  --text-decoration-color-hover: light-dark(var(--color-white), var(--color-gray-50));
+
+  // badge
+  --badge-background-color-default: light-dark(var(--color-gray-900), var(--color-gray-100));
+
+  // button
+  --button-tertiary-color: light-dark(var(--color-gray-50), var(--color-white));
+  --button-tertiary-border: light-dark(var(--color-gray-50), var(--color-gray-50));
+
+  // footer
+  --footer-background-color: light-dark(var(--color-gray-1000), var(--background-color));
+  --footer-link-color: light-dark(var(--color-gray-50), var(--color-white));
+  --footer-link-decoration-color: light-dark(var(--color-gray-50), var(--color-white));
+
+  // form
+  --checkbox-checkmark-color: var(--color-white);
+  --checkbox-background-color: var(--color-primary-200);
+  --checkbox-border-color: var(--checkbox-background-color);
+  --radio-button-circle-color: var(--color-primary-200);
+  --indicator-border-color: var(--color-white);
+  --select-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16px' height='16px' viewBox='0 0 32 32' %3E%3Cpath fill='black' d='M16 22 6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z'/%3E%3C/svg%3E%0A");
+  --slider-thumb-color: var(--color-primary-200);
+  --slider-track-color: var(--color-gray-900);
+  --slider-progress-color: var(--color-primary-100);
+
+  // kbd
+  --kbd-color-text: light-dark(var(--color-gray-200), var(--color-gray-800));
+  --kbd-color-border: light-dark(var(--color-gray-700), var(--color-gray-300));
+  --kbd-color-background: light-dark(var(--color-gray-1000), var(--color-gray-200));
+
+  // predictive search
+  --predictive-search-controls-background-color: light-dark(var(--color-gray-900), var(--color-gray-100));
+
+  // top bar
+  --top-bar-dimmed-color: light-dark(var(--color-gray-300), var(--color-gray-800));
+  --top-bar-button-hover-color: light-dark(var(--color-gray-900), var(--color-gray-100));
+
+  // usps
+  --usp-icon-color: light-dark(var(--color-primary-200), var(--color-primary-100));
+}
+
+.prefers-dark-mode {
+  color-scheme: dark;
+
+  --select-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16px' height='16px' viewBox='0 0 32 32' %3E%3Cpath fill='white' d='M16 22 6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z'/%3E%3C/svg%3E%0A");
+}
+
+.prefers-high-contrast {
+  // defaults
+  --text-color: var(--color-contrast-black);
+  --link-color: var(--color-contrast-darkblue);
+  --border-color: var(--color-gray-500);
+  --background-color: var(--color-contrast-white);
+
+  // footer
+  --footer-link-color: var(--color-contrast-darkblue);
+  --footer-link-decoration-color: var(--color-contrast-darkblue);
+
+  &.prefers-dark-mode {
+    // defaults
+    --text-color: var(--color-contrast-white);
+    --link-color: var(--color-contrast-lightblue);
+    --background-color: var(--color-contrast-black);
+
+    // footer
+    --footer-link-color: var(--color-contrast-lightblue);
+    --footer-link-decoration-color: var(--color-contrast-lightblue);
+  }
+}
+
+.prefers-reduced-motion {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body *,
+  body *::before,
+  body *::after {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition-duration: 100ms !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body * {
+    animation: none !important;
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

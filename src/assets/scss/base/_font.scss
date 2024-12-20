@@ -1,0 +1,139 @@
+@font-face {
+  font-family: 'Montserrat';
+  src:
+    local('Montserrat SemiBold'),
+    url('/fonts/Montserrat-SemiBold.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src:
+    local('Montserrat SemiBold Italic'),
+    url('/fonts/Montserrat-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src:
+    local('Montserrat ExtraBold'),
+    url('/fonts/Montserrat-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src:
+    local('Montserrat ExtraBold Italic'),
+    url('/fonts/Montserrat-ExtraBoldItalic.woff2') format('woff2');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src:
+    local('Roboto Regular'),
+    url('/fonts/Roboto-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src:
+    local('Roboto Italic'),
+    url('/fonts/Roboto-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src:
+    local('Roboto Bold'),
+    url('/fonts/Roboto-Bold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src:
+    local('Roboto Bold Italic'),
+    url('/fonts/Roboto-BoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+body {
+  font-size: 1rem;
+
+  p {
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+    font-family: var(--font-heading);
+  }
+
+  h1,
+  h2 {
+    font-weight: 800;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 500;
+  }
+
+  h1 {
+    font-size: var(--font-size-6);
+    line-height: var(--font-size-7);
+  }
+
+  h2 {
+    font-size: var(--font-size-5);
+    line-height: var(--font-size-6);
+  }
+
+  h3 {
+    font-size: var(--font-size-4);
+    line-height: var(--font-size-5);
+  }
+
+  h4 {
+    font-size: var(--font-size-3);
+    line-height: var(--font-size-4);
+  }
+
+  h5 {
+    font-size: var(--font-size-2);
+    line-height: var(--font-size-3);
+  }
+
+  h6 {
+    font-size: var(--font-size-1);
+    line-height: var(--font-size-2);
+  }
+}

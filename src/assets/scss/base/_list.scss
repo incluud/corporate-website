@@ -1,0 +1,62 @@
+ul:not([class]),
+ol:not([class]) {
+  margin-left: 1rem;
+}
+
+ul:not([class]) ul,
+ol:not([class]) ul,
+ul:not([class]) ol,
+ol:not([class]) ol {
+  padding: 0.5rem 1rem 0;
+}
+
+ul:not([class]) li,
+ol:not([class]) li {
+  margin-bottom: 0.5rem;
+}
+
+ul:not([class]) > li::marker {
+  display: block;
+  color: var(--primary-800);
+}
+
+ol.incremented {
+  counter-reset: item;
+}
+
+ol.incremented ol {
+  counter-reset: item;
+}
+
+ol.incremented ol,
+ol.incremented ul {
+  margin: 0.75rem 0 0 1rem;
+}
+
+ol.incremented li {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 48rem) {
+  ol.incremented li {
+    margin-bottom: 0.75rem;
+  }
+}
+
+ol.incremented li::before {
+  content: counters(item, '.') '. ';
+  counter-increment: item;
+}
+
+ol.incremented li:last-child {
+  margin-bottom: 0;
+}
+
+ol.incremented li p {
+  display: inline;
+}
+
+ol.incremented ul li::before {
+  content: '';
+}

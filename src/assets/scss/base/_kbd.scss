@@ -1,0 +1,19 @@
+kbd {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-inline-size: 12px;
+  padding: 0 var(--space-3xs);
+  inset-block-start: -1px;
+  aspect-ratio: var(--ratio-square);
+  color: var(--kbd-color-text);
+  background-color: var(--kbd-color-background);
+  border: 1px solid var(--kbd-color-border);
+  border-radius: var(--radius-s);
+  box-shadow: 0 2px 0 1px var(--kbd-color-border);
+  font-family: var(--font-family-sans-serif);
+
+  &.flat {
+    box-shadow: none;
+  }
+}
