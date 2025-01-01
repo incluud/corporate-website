@@ -1,17 +1,21 @@
 ---
 import '../assets/scss/globals.scss'
 import SiteMeta from '../components/SiteMeta.astro'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
 
 const {
-  title = 'Astro',
-  description = 'A starter project with accessibility features using Astro static site builder. Contains accessible landmarks, skip links, a dark mode color scheme, better focus outline and keyboard menu navigation.',
-  url,
+  title = 'Home',
+  description,
   image = '/social-preview-image.png',
-  author = 'Mark Teekman',
+  author = 'Incluud',
 } = Astro.props
+
+// Only truncate description if it exists
+const truncatedDescription = description ? description.substring(0, 100) : undefined
 ---
 
-<html lang="en" dir="ltr">
+<html lang={Astro.currentLocale} dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,17 +26,137 @@ const {
 
     <SiteMeta
       title={title}
-      description={description.substring(0, 100)}
+      description={truncatedDescription}
       url={Astro.site
         ? `${Astro.site}/${title.toLowerCase().replaceAll(' ', '-')}`
-        : `https://accessible-astro.dev/${title.toLowerCase().replaceAll(' ', '-')}`}
+        : `https://incluud.com/${title.toLowerCase().replaceAll(' ', '-')}`}
       image={image}
       author={author}
     />
   </head>
   <body>
+    <div class="dot-pattern"></div>
+    <Header />
     <main id="main-content" transition:animate="fade">
       <slot />
     </main>
+    <Footer />
   </body>
 </html>
+
+<style lang="scss" is:global>
+  body {
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .dot-pattern {
+    position: absolute;
+    opacity: 0.5;
+    z-index: -1;
+
+    // Add subtle mask
+    mask-image: radial-gradient(ellipse at center, black 0%, black 50%, transparent 100%);
+    inset: 0;
+
+    // Create dot pattern
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      var(--color-primary-100) 1px,
+      transparent 1px
+    );
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  section:not(#hero) {
+    margin-block: calc(var(--space-3xl) * 4);
+    scroll-margin-block-start: var(--space-3xl);
+
+    &#projects {
+      margin-block-start: var(--space-3xl);
+    }
+
+    &#mission {
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      p {
+        max-width: 60ch;
+        font-weight: 300;
+        font-size: var(--font-size-4);
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      a {
+        display: inline-block;
+        margin-block-start: var(--space-m);
+        font-size: var(--font-size-2);
+        text-align: center;
+      }
+
+      [data-icon] {
+        display: inline;
+      }
+    }
+
+    &#who-we-are {
+      margin-block-end: var(--space-3xl);
+    }
+
+    h2 {
+      margin-bottom: var(--space-xl);
+      font-size: var(--font-size-6);
+      text-align: center;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
+      gap: var(--space-l);
+    }
+
+    .socials {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-xs);
+      margin-block-start: var(--space-xs);
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3xs);
+        font-size: var(--font-size-0);
+
+        [data-icon] {
+          margin-block-start: var(--space-3xs);
+        }
+      }
+    }
+  }
+
+  .modal {
+    inline-size: min(80%, 650px);
+  }
+
+  .modal__content {
+    text-align: left;
+  }
+
+  .sr-only {
+    position: absolute;
+    margin: -1px;
+    padding: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border-width: 0;
+    white-space: nowrap;
+  }
+</style>

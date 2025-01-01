@@ -1,0 +1,34 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary'
+  lang?: string
+}
+
+const { variant = 'primary', lang } = Astro.props
+---
+
+<span class:list={['badge', `badge--${variant}`]} lang={lang}>
+  <slot />
+</span>
+
+<style lang="scss">
+  .badge {
+    --badge-height: 1.5;
+
+    display: inline-block;
+    border-radius: var(--radius-s);
+    padding: var(--space-3xs) var(--space-xs);
+    font-weight: 500;
+    font-size: var(--font-size--1);
+    line-height: var(--badge-height);
+    text-shadow: none;
+
+    &--primary {
+      background-color: var(--color-primary-200);
+    }
+
+    &--secondary {
+      background-color: var(--color-secondary-200);
+    }
+  }
+</style>

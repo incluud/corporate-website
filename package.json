@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "accessible-astro-components": "^3.0.1",
     "astro": "^5.1.1"
   },
   "devDependencies": {
@@ -18,12 +19,13 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "astro-compress": "^2.3.5",
-    "astro-icon": "^1.1.4",
+    "astro-icon": "^1.1.5",
     "eslint": "^8.57.0",
     "eslint-plugin-astro": "^0.31.4",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "prettier": "^3.4.1",
     "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-css-order": "^2.1.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "sass": "^1.81.0",
     "svgo": "^3.3.2"

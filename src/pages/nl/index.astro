@@ -1,0 +1,114 @@
+---
+import DefaultLayout from '../../layouts/DefaultLayout.astro'
+import Hero from '../../components/Hero.astro'
+import Card from '../../components/Card.astro'
+import ContentMedia from '../../components/ContentMedia.astro'
+import { getRepository } from '../../utils/github'
+import { Icon } from 'astro-icon/components'
+
+const repos = await Promise.all([
+  getRepository('markteekman', 'accessible-astro-starter'),
+  getRepository('markteekman', 'accessible-astro-components'),
+  getRepository('markteekman', 'accessible-astro-dashboard'),
+])
+---
+
+<DefaultLayout title="Home">
+  <Hero
+    title="Incluud"
+    subtitle="Wij ontwikkelen Open Source toegankelijke software voor het web"
+    buttonText="Bekijk onze laatste projecten"
+  />
+  <section id="projects">
+    <div class="container">
+      <h2>Projecten</h2>
+      <div class="card-grid">
+        {
+          repos.map((repo) => {
+            const descriptions = {
+              'accessible-astro-starter':
+                'Een toegankelijk starter template voor Astro met vooraf geconfigureerde componenten en integraties',
+              'accessible-astro-components':
+                'Een verzameling toegankelijke componenten voor Astro projecten met ingebouwde ARIA attributen',
+              'accessible-astro-dashboard':
+                'Een volledig toegankelijk dashboard template voor Astro met dark mode en authenticatie',
+            }
+            return (
+              <Card
+                href={repo.html_url}
+                title={repo.name}
+                repo={repo}
+                description={descriptions[repo.name]}
+              />
+            )
+          })
+        }
+
+        <Card isPreview title="Binnenkort...">
+          We werken aan meer toegankelijke Astro EN Shopify projecten, blijf op de hoogte voor
+          updates!
+        </Card>
+      </div>
+    </div>
+  </section>
+  <section id="mission">
+    <div class="container">
+      <h2>Onze missie</h2>
+      <p>
+        <Icon name="mdi:format-quote-open" size="3.5rem" />
+        We willen het web toegankelijker maken voor iedereen door toegankelijke en inclusieve projecten
+        te creëren die gemakkelijk te gebruiken en te begrijpen zijn door ontwikkelaars en eindgebruikers.
+        <Icon name="mdi:format-quote-close" size="3.5rem" />
+      </p>
+      <a href="#who-we-are">Leer meer over ons</a>
+    </div>
+  </section>
+  <section id="who-we-are">
+    <div class="container">
+      <h2>Wie zijn wij</h2>
+    </div>
+    <ContentMedia imgSrc="/mark-profile.png">
+      <h3>Mark Teekman</h3>
+      <p>
+        Senior Front-end Developer en (Design) System specialist met een sterke focus op Web
+        Toegankelijkheid. Ik heb kernvaardigheden voor het web onder de knie en onderhoud deze
+        continu: HTML, CSS en JavaScript. Deze fundamentele kennis stelt me in staat om met
+        verschillende JavaScript frameworks te werken, waarbij ik momenteel de voorkeur geef aan
+        Vue.js en Astro.js. Ik gebruik SCSS of Tailwind CSS voor styling en breid mijn kennis uit op
+        het gebied van Unit Testing en TypeScript.
+      </p>
+      <div class="socials">
+        <a href="https://markteekman.nl">
+          <Icon name="mdi:link" size="1.5rem" />
+          Mark's website
+        </a>
+        <a href="https://github.com/markteekman">
+          <Icon name="mdi:github" size="1.5rem" />
+          Mark's GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/markteekman/">
+          <Icon name="mdi:linkedin" size="1.5rem" />
+          Mark's LinkedIn
+        </a>
+      </div>
+    </ContentMedia>
+    <ContentMedia imgSrc="/peter-profile.png" reverseImg={true}>
+      <h3>Peter Padberg</h3>
+      <p>
+        Peter is een ervaren back-end developer gespecialiseerd in Laravel en werkt als teamleider
+        bij Exapps. Met zijn uitgebreide ervaring in PHP-ontwikkeling en teammanagement helpt hij
+        projecten en ontwikkelaars succesvol te zijn.
+      </p>
+      <div class="socials">
+        <a href="https://github.com/peterpadberg">
+          <Icon name="mdi:github" size="1.5rem" />
+          Peter's GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/peterpadberg/">
+          <Icon name="mdi:linkedin" size="1.5rem" />
+          Peter's LinkedIn
+        </a>
+      </div>
+    </ContentMedia>
+  </section>
+</DefaultLayout>

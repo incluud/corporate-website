@@ -1,0 +1,295 @@
+---
+import MotionToggle from './MotionToggle.astro'
+import LanguageDropdown from './LanguageDropdown.astro'
+import { Icon } from 'astro-icon/components'
+---
+
+<div class="navigation">
+  <nav class="menu" aria-label="Main">
+    <ul class="menu__list">
+      <li>
+        <a class="menu__link" href="#hero" data-nav-link>Home</a>
+      </li>
+      <li>
+        <a class="menu__link" href="#projects" data-nav-link>Projects</a>
+      </li>
+      <li>
+        <a class="menu__link" href="#mission" data-nav-link>Our mission</a>
+      </li>
+      <li>
+        <a class="menu__link" href="#who-we-are" data-nav-link>Who are we</a>
+      </li>
+      <li>
+        <LanguageDropdown />
+      </li>
+      <li>
+        <a class="menu__link" href="https://github.com/incluud">
+          <Icon name="mdi:github" />
+          <span class="sr-only">Go to our GitHub</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <MotionToggle />
+</div>
+
+<script>
+  function initNavigation() {
+    function updateNavigationLinks() {
+      const currentLang = window.location.pathname.startsWith('/nl') ? '/nl' : ''
+
+      document.querySelectorAll('[data-nav-link]').forEach((link) => {
+        const href = link.getAttribute('href')?.replace(/^\/[a-z]{2}/, '') || ''
+        link.setAttribute('href', `${currentLang}${href}`)
+      })
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            document.querySelectorAll('[data-nav-link]').forEach((link) => {
+              link.classList.remove('active')
+            })
+
+            const id = entry.target.id
+            const correspondingLink = document.querySelector(`[data-nav-link][href$="#${id}"]`)
+
+            if (correspondingLink) {
+              correspondingLink.classList.add('active')
+            }
+          }
+        })
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '-10% 0px',
+      }
+    )
+
+    function handleKeyboardNavigation(this: HTMLElement, event: KeyboardEvent) {
+      const mainMenu = event.currentTarget as HTMLElement
+      const element = event.target as Element
+      const currentMenuItem = element.closest('li')
+      const menuItems = [
+        ...mainMenu.querySelectorAll('li:has(.menu__link), li:has(button#lang-trigger)'),
+      ]
+      const currentIndex = menuItems.findIndex((item) => item === currentMenuItem)
+
+      if (currentIndex === -1) return
+
+      let targetItem
+
+      switch (event.key) {
+        case 'ArrowRight':
+          event.preventDefault()
+          if (currentIndex === menuItems.length - 1) {
+            targetItem = menuItems[0]
+          } else {
+            targetItem = menuItems[currentIndex + 1]
+          }
+          break
+
+        case 'ArrowLeft':
+          event.preventDefault()
+          if (currentIndex === 0) {
+            targetItem = menuItems[menuItems.length - 1]
+          } else {
+            targetItem = menuItems[currentIndex - 1]
+          }
+          break
+      }
+
+      if (targetItem) {
+        const focusableElement = targetItem.querySelector('a, button') as HTMLElement
+        focusableElement?.focus()
+      }
+    }
+
+    updateNavigationLinks()
+    ;['hero', 'projects', 'mission', 'who-we-are'].forEach((id) => {
+      const section = document.getElementById(id)
+      if (section) observer.observe(section)
+    })
+
+    const menuList = document.querySelector('.menu__list') as HTMLElement
+    menuList?.addEventListener('keydown', handleKeyboardNavigation as EventListener)
+
+    return () => {
+      menuList?.removeEventListener('keydown', handleKeyboardNavigation as EventListener)
+    }
+  }
+
+  initNavigation()
+
+  document.addEventListener('astro:page-load', () => {
+    initNavigation()
+  })
+</script>
+
+<style lang="scss">
+  @use '../assets/scss/base/breakpoints' as *;
+
+  .navigation {
+    --nav-transition: var(--animation-speed-fast);
+
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    gap: var(--space-m);
+    translate: 0 1.5rem;
+    visibility: hidden;
+    opacity: 0;
+    backdrop-filter: blur(16px);
+    transition-behavior: allow-discrete;
+    transition-duration: var(--nav-transition);
+    transition-property: all;
+    inset-block-start: var(--header-height);
+    inset-inline-start: var(--space-m);
+    box-shadow: var(--elevation-3);
+    border-radius: var(--radius-m);
+    background-color: hsl(var(--color-background-hsl) / 95%);
+    padding: var(--space-m);
+    inline-size: calc(100% - var(--space-m) * 2);
+
+    @starting-style {
+      translate: 0 1.5rem;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    &.open {
+      translate: 0 0.5rem;
+      visibility: visible;
+      opacity: 1;
+    }
+
+    @include breakpoint(l) {
+      --nav-transition: 0s;
+
+      display: flex;
+      position: unset;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      translate: 0 0;
+      visibility: visible;
+      opacity: 1;
+      backdrop-filter: none;
+      inset: 0;
+      box-shadow: none;
+      border-radius: 0;
+      background-color: transparent;
+      padding: 0;
+      inline-size: fit-content;
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include breakpoint(l) {
+      flex-direction: row;
+      gap: var(--space-xs);
+    }
+  }
+
+  li {
+    display: flex;
+    position: relative;
+    align-items: center;
+  }
+
+  a {
+    position: relative;
+    transition: all var(--animation-speed-fast) var(--cubic-bezier);
+    padding: 0.5rem 0;
+    color: var(--color-gray-800);
+    font-size: var(--font-size-1);
+    font-family: var(--font-heading);
+    text-decoration: none;
+
+    @include breakpoint(l) {
+      padding: 0.5rem 1rem;
+      font-size: var(--font-size--1);
+    }
+
+    &::after {
+      position: absolute;
+      opacity: 0;
+      transition: all var(--animation-speed-fast) var(--cubic-bezier);
+      margin-block: auto;
+      inset-block: 0;
+      inset-inline-start: -0.75rem;
+      box-shadow: 0 0 8px -2px var(--dot-color, transparent);
+      border-radius: 50%;
+      background-color: var(--dot-color, var(--color-gray-800));
+      width: 0.375rem;
+      height: 0.375rem;
+      content: '';
+
+      @include breakpoint(l) {
+        margin-inline: auto;
+        inset-block: auto 1px;
+        inset-inline: 0;
+      }
+    }
+
+    &:where(:hover, :focus-visible, &.active) {
+      translate: 0.5rem 0;
+      padding-inline-start: 0.5rem;
+
+      @include breakpoint(l) {
+        translate: 0 -0.15rem;
+        padding-inline-start: 1rem;
+      }
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  [data-icon] {
+    inline-size: 32px;
+    block-size: 32px;
+
+    @include breakpoint(l) {
+      inline-size: 24px;
+      block-size: 24px;
+    }
+  }
+
+  .menu__list {
+    li {
+      &:nth-child(1) a::after {
+        --dot-color: #ff595e;
+      }
+
+      &:nth-child(2) a::after {
+        --dot-color: #ffca3a;
+      }
+
+      &:nth-child(3) a::after {
+        --dot-color: #8ac926;
+      }
+
+      &:nth-child(4) a::after {
+        --dot-color: #1982c4;
+      }
+
+      &:nth-child(5) a::after {
+        --dot-color: #7018eb;
+      }
+
+      &:nth-child(6) a::after {
+        --dot-color: #ff924c;
+      }
+    }
+  }
+</style>

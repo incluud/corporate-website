@@ -1,7 +1,93 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro'
+import Hero from '../components/Hero.astro'
+import Card from '../components/Card.astro'
+import ContentMedia from '../components/ContentMedia.astro'
+import { getRepository } from '../utils/github'
+import { Icon } from 'astro-icon/components'
+
+const repos = await Promise.all([
+  getRepository('markteekman', 'accessible-astro-starter'),
+  getRepository('markteekman', 'accessible-astro-components'),
+  getRepository('markteekman', 'accessible-astro-dashboard'),
+])
 ---
 
 <DefaultLayout title="Home">
-  <h1>Hello World</h1>
+  <Hero
+    title="Incluud"
+    subtitle="We develop Open Source accessible software for the web"
+    buttonText="Check out our latest projects"
+  />
+  <section id="projects">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="card-grid">
+        {repos.map((repo) => <Card href={repo.html_url} title={repo.name} repo={repo} />)}
+
+        <Card isPreview title="Coming soon...">
+          We are working on more accessible Astro AND Shopify projects, stay tuned for updates!
+        </Card>
+      </div>
+    </div>
+  </section>
+  <section id="mission">
+    <div class="container">
+      <h2>Our mission</h2>
+      <p>
+        <Icon name="mdi:format-quote-open" size="3.5rem" />
+        We want to make the web more accessible for everyone by creating accessible and inclusive projects
+        that are easy to use and understand by developers and end-users.
+        <Icon name="mdi:format-quote-close" size="3.5rem" />
+      </p>
+      <a href="#who-we-are">Learn more about us</a>
+    </div>
+  </section>
+  <section id="who-we-are">
+    <div class="container">
+      <h2>Who we are</h2>
+    </div>
+    <ContentMedia imgSrc="/mark-profile.png">
+      <h3>Mark Teekman</h3>
+      <p>
+        Senior Front-end Developer and (Design) System enthusiast with a strong focus on Web
+        Accessibility. I've mastered and continuously maintain core web skills: HTML, CSS and
+        JavaScript. This fundamental knowledge allows me to work with various JavaScript frameworks,
+        currently favoring Vue.js and Astro.js. I use SCSS or Tailwind CSS for styling and am
+        expanding my knowledge in Unit Testing and TypeScript.
+      </p>
+      <div class="socials">
+        <a href="https://markteekman.nl">
+          <Icon name="mdi:link" size="1.5rem" />
+          Mark's website
+        </a>
+        <a href="https://github.com/markteekman">
+          <Icon name="mdi:github" size="1.5rem" />
+          Mark's GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/markteekman/">
+          <Icon name="mdi:linkedin" size="1.5rem" />
+          Mark's LinkedIn
+        </a>
+      </div>
+    </ContentMedia>
+    <ContentMedia imgSrc="/peter-profile.png" reverseImg={true}>
+      <h3>Peter Padberg</h3>
+      <p>
+        Peter is a skilled back-end developer specializing in Laravel and serves as a team lead at
+        Exapps. With his extensive experience in PHP development and team management, he helps guide
+        projects and developers to successful outcomes.
+      </p>
+      <div class="socials">
+        <a href="https://github.com/peterpadberg">
+          <Icon name="mdi:github" size="1.5rem" />
+          Peter's GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/peterpadberg/">
+          <Icon name="mdi:linkedin" size="1.5rem" />
+          Peter's LinkedIn
+        </a>
+      </div>
+    </ContentMedia>
+  </section>
 </DefaultLayout>

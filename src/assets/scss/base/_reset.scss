@@ -5,18 +5,6 @@ html {
   scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  body * {
-    animation-duration: 0s !important;
-    animation-delay: 0s !important;
-    transition-duration: 100ms !important;
-  }
-}
-
 *,
 *::after,
 *::before {

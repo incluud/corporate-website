@@ -1,0 +1,227 @@
+---
+import Button from './Button.astro'
+
+interface Props {
+  title?: string
+  subtitle?: string
+  buttonText?: string
+}
+
+const {
+  title = 'Incluud',
+  subtitle = 'We develop Open Source accessible software for the web',
+  buttonText = 'Check out our latest projects',
+} = Astro.props
+---
+
+<section id="hero" class="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <h1>{title}</h1>
+      <p>{subtitle}</p>
+      <Button href="#projects">{buttonText}</Button>
+    </div>
+  </div>
+  <div class="backlight-wrapper">
+    <div class="backlights"></div>
+  </div>
+</section>
+
+<style lang="scss">
+  .hero {
+    // oklch values
+    --lch-white: 100% 0 0;
+    --lch-black: 0% 0 0;
+    --lch-blue: 69% 0.15 255;
+    --lch-lightblue: 80% 0.1 255;
+    --lch-darkblue: 65% 0.2 255;
+    --lch-indigo: 76% 0.1 276;
+    --lch-violet: 89% 0.06 291;
+    --lch-background-light: 90% 0 0;
+    --lch-background-dark: 10% 0 0;
+
+    // colors
+    --color-white: oklch(var(--lch-white));
+    --color-black: oklch(var(--lch-black));
+
+    // gradients
+    --light-gradient: repeating-linear-gradient(
+      100deg,
+      oklch(var(--lch-white)) 0%,
+      oklch(var(--lch-white)) 7%,
+      var(--color-transparent) 10%,
+      var(--color-transparent) 12%,
+      oklch(var(--lch-white)) 16%
+    );
+    --dark-gradient: repeating-linear-gradient(
+      100deg,
+      oklch(var(--lch-black)) 0%,
+      oklch(var(--lch-black)) 7%,
+      var(--color-transparent) 10%,
+      var(--color-transparent) 12%,
+      oklch(var(--lch-black)) 16%
+    );
+    --aurora: repeating-linear-gradient(
+      100deg,
+      oklch(var(--lch-darkblue)) 10%,
+      oklch(var(--lch-indigo)) 15%,
+      oklch(var(--lch-lightblue)) 20%,
+      oklch(var(--lch-violet)) 25%,
+      oklch(var(--lch-blue)) 30%
+    );
+
+    // Add these new gradient variables
+    --gradient-primary: linear-gradient(
+      160deg,
+      oklch(65% 0.2 280deg) 0%,
+      oklch(70% 0.2 260deg) 50%,
+      oklch(75% 0.2 240deg) 100%
+    );
+    --gradient-secondary: linear-gradient(
+      120deg,
+      oklch(60% 0.15 300deg) 0%,
+      oklch(65% 0.15 280deg) 100%
+    );
+
+    position: relative;
+    overflow-x: clip;
+
+    &::before,
+    &::after {
+      position: absolute;
+      transform: translateZ(0);
+      opacity: 0.2;
+      z-index: -1;
+      filter: blur(8rem);
+      border-radius: 50%;
+      content: '';
+    }
+
+    &::before {
+      inset-block-start: 40%;
+      inset-inline-start: -10%;
+      background: var(--gradient-primary);
+      inline-size: 50vw;
+      block-size: 50vw;
+    }
+
+    &::after {
+      inset-block-end: 30%;
+      inset-inline-end: -10%;
+      background: var(--gradient-secondary);
+      inline-size: 40vw;
+      block-size: 40vw;
+    }
+
+    &__inner {
+      display: grid;
+      position: relative;
+      place-items: center;
+      z-index: 1;
+      padding-block: calc(var(--space-2xl-3xl) * 2.5);
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-m);
+      text-align: center;
+
+      h1 {
+        position: relative;
+        filter: drop-shadow(3px 3px 0 rgb(128 0 255 / 40%))
+          drop-shadow(-5px -5px 0 rgb(128 0 255 / 30%)) drop-shadow(6px 6px 0 rgb(0 255 255 / 30%))
+          drop-shadow(-8px -8px 0 rgb(0 255 255 / 20%));
+        margin-inline: -3px;
+        background-image: linear-gradient(
+          90deg,
+          var(--color-primary-100),
+          var(--color-secondary-100)
+        );
+        background-clip: text;
+        padding-inline: 3px;
+        font-size: calc(var(--font-size-7) * 1.5);
+        line-height: calc(var(--font-size-7) * 1.5);
+        -webkit-text-fill-color: transparent;
+      }
+
+      p {
+        max-inline-size: 40ch;
+        color: var(--color-gray-800);
+        font-weight: bold;
+        font-size: var(--font-size-5);
+        line-height: var(--font-size-6);
+        font-family: var(--font-heading);
+        text-wrap: balance;
+      }
+    }
+
+    &__controls {
+      position: absolute;
+      z-index: 1;
+      inset-block-end: 2rem;
+      inset-inline-end: 2rem;
+
+      button {
+        opacity: 0.7;
+        transition: all var(--animation-speed-fast) var(--cubic-bezier);
+
+        &:where(:hover, :focus-within) {
+          scale: 1.1;
+          opacity: 1;
+        }
+      }
+    }
+
+    .backlight-wrapper {
+      position: absolute;
+      opacity: 0.7;
+      inset: 0;
+      overflow: clip;
+      pointer-events: none;
+    }
+
+    .backlights {
+      position: absolute;
+      opacity: 0.5;
+      mask-image: radial-gradient(
+        ellipse at 100% 0,
+        var(--color-black) 10%,
+        var(--color-transparent) 70%
+      );
+      filter: blur(10px);
+      inset: -1rem;
+      background-image: var(--dark-gradient), var(--aurora);
+      background-position:
+        50% 50%,
+        50% 50%;
+      background-size: 300%, 200%;
+
+      &::after {
+        position: absolute;
+        mix-blend-mode: difference;
+        animation: aurora 90s linear infinite;
+        inset: 0;
+        background-image: var(--dark-gradient), var(--aurora);
+        background-size: 200%, 100%;
+        background-attachment: fixed;
+        content: '';
+      }
+    }
+
+    @keyframes aurora {
+      0% {
+        background-position:
+          50% 50%,
+          50% 50%;
+      }
+
+      100% {
+        background-position:
+          350% 50%,
+          350% 50%;
+      }
+    }
+  }
+</style>

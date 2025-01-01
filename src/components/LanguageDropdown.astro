@@ -1,0 +1,341 @@
+---
+import { Icon } from 'astro-icon/components'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+---
+
+<div class="lang-wrapper">
+  <button
+    id="lang-trigger"
+    popovertarget="lang-dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    <Icon name="mdi:web" size="24" />
+    <span class="sr-only">
+      {
+        Astro.currentLocale === 'nl'
+          ? 'Kies taal, huidige taal is Nederlands'
+          : 'Choose language, current language is English'
+      }
+    </span>
+    <Icon name="mdi:chevron-down" size="24" />
+  </button>
+  <div id="lang-dropdown" popover>
+    <ul>
+      <li>
+        <a href={getRelativeLocaleUrl('en')} class:list={[{ active: Astro.currentLocale === 'en' }]}
+          >English</a
+        >
+      </li>
+      <li>
+        <a href={getRelativeLocaleUrl('nl')} class:list={[{ active: Astro.currentLocale === 'nl' }]}
+          >Nederlands</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  function initLanguageDropdown() {
+    const trigger = document.getElementById('lang-trigger') as HTMLButtonElement
+    const dropdown = document.getElementById('lang-dropdown') as HTMLElement
+
+    // Early return if elements aren't found
+    if (!trigger || !dropdown) {
+      console.warn('Language dropdown elements not found')
+      return
+    }
+
+    function handleKeydown(event: KeyboardEvent) {
+      const isDropdownOpen = dropdown.matches(':popover-open')
+      const menuItems = [...dropdown.querySelectorAll('a')] as HTMLAnchorElement[]
+      const currentItem = document.activeElement as HTMLElement
+
+      // Debug logs
+      console.log('Current active element:', currentItem)
+      console.log('Is dropdown open:', isDropdownOpen)
+      console.log('Menu items:', menuItems)
+
+      switch (event.key) {
+        case 'ArrowDown':
+          if (!isDropdownOpen && currentItem === trigger) {
+            event.preventDefault()
+            trigger.click()
+
+            requestAnimationFrame(() => {
+              const firstItem = dropdown.querySelector('a') as HTMLElement
+              console.log('Focusing first item:', firstItem)
+              firstItem?.focus()
+              updateAriaAttributes()
+            })
+          } else if (isDropdownOpen) {
+            event.preventDefault()
+            const currentIndex = menuItems.indexOf(currentItem as HTMLAnchorElement)
+            const nextIndex = currentIndex === menuItems.length - 1 ? 0 : currentIndex + 1
+            menuItems[nextIndex]?.focus()
+          }
+          break
+
+        case 'ArrowUp':
+          if (isDropdownOpen) {
+            event.preventDefault()
+            const currentIndex = menuItems.indexOf(currentItem as HTMLAnchorElement)
+            const prevIndex = currentIndex <= 0 ? menuItems.length - 1 : currentIndex - 1
+            menuItems[prevIndex]?.focus()
+          }
+          break
+
+        case 'Escape':
+          if (isDropdownOpen) {
+            event.preventDefault()
+            trigger.click()
+            updateAriaAttributes()
+            trigger.focus()
+          }
+          break
+
+        case 'Tab':
+          if (isDropdownOpen) {
+            const isLastItem = currentItem === menuItems[menuItems.length - 1]
+            const isFirstItem = currentItem === menuItems[0]
+
+            if ((isLastItem && !event.shiftKey) || (isFirstItem && event.shiftKey)) {
+              trigger.click()
+              updateAriaAttributes()
+            }
+          }
+          break
+      }
+    }
+
+    const updateAriaAttributes = () => {
+      const isOpen = dropdown.matches(':popover-open')
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false')
+    }
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement
+      if (!dropdown.contains(target) && !trigger.contains(target)) {
+        updateAriaAttributes()
+      }
+    }
+
+    // Clean up existing event listeners before adding new ones
+    function cleanup() {
+      trigger.removeEventListener('keydown', handleKeydown)
+      dropdown.removeEventListener('keydown', handleKeydown)
+      trigger.removeEventListener('click', updateAriaAttributes)
+      document.removeEventListener('click', handleClickOutside)
+      dropdown.removeEventListener('toggle', updateAriaAttributes)
+    }
+
+    // Remove any existing listeners before adding new ones
+    cleanup()
+
+    // Add event listeners
+    trigger.addEventListener('keydown', handleKeydown)
+    dropdown.addEventListener('keydown', handleKeydown)
+    trigger.addEventListener('click', updateAriaAttributes)
+    document.addEventListener('click', handleClickOutside)
+    dropdown.addEventListener('toggle', updateAriaAttributes)
+
+    // Set initial ARIA state
+    updateAriaAttributes()
+
+    return cleanup
+  }
+
+  // Initialize on page load
+  let cleanup = initLanguageDropdown()
+
+  // Re-initialize on view transitions
+  document.addEventListener('astro:page-load', () => {
+    // Clean up existing listeners
+    if (cleanup) cleanup()
+    // Initialize new listeners
+    cleanup = initLanguageDropdown()
+  })
+
+  // Clean up before view transitions
+  document.addEventListener('astro:before-swap', () => {
+    if (cleanup) cleanup()
+  })
+</script>
+
+<style lang="scss">
+  @use '../assets/scss/base/breakpoints' as *;
+  @use '../assets/scss/base/mixins' as *;
+
+  .lang-wrapper {
+    --dot-color: var(--color-primary-100);
+
+    position: relative;
+
+    &:has([popover]:popover-open) {
+      button {
+        [data-icon='mdi:chevron-down'] {
+          transform: scaleY(-1);
+          transition: transform var(--animation-speed-fast) var(--cubic-bezier);
+        }
+      }
+    }
+  }
+
+  button {
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: 0.15rem;
+    transition: all var(--animation-speed-fast) var(--cubic-bezier);
+    margin-block-end: -1rem;
+    padding: 0.5rem 0;
+    color: var(--color-gray-800);
+    font-size: var(--font-size--1);
+    font-family: var(--font-heading);
+    text-decoration: none;
+    anchor-name: --lang-trigger;
+
+    @include breakpoint(l) {
+      margin-block-end: 0;
+      padding: 0.5rem 1rem;
+    }
+
+    &::after {
+      position: absolute;
+      opacity: 0;
+      transition: all var(--animation-speed-fast) var(--cubic-bezier);
+      margin-block: auto;
+      inset-block: 0;
+      inset-inline-start: -0.75rem;
+      box-shadow: 0 0 8px -2px var(--dot-color, transparent);
+      border-radius: 50%;
+      background-color: var(--dot-color, var(--color-gray-800));
+      width: 0.375rem;
+      height: 0.375rem;
+      content: '';
+
+      @include breakpoint(l) {
+        margin-inline: auto;
+        inset-block: auto 1px;
+        inset-inline: 0;
+      }
+    }
+
+    &:where(:hover, :focus-visible) {
+      translate: 0.5rem 0;
+      padding-inline-start: 0.5rem;
+
+      @include breakpoint(l) {
+        translate: 0 -0.15rem;
+        padding-inline-start: 1rem;
+      }
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    [data-icon='mdi:chevron-down'] {
+      transition: transform var(--animation-speed-fast) var(--cubic-bezier);
+    }
+  }
+
+  [data-icon] {
+    inline-size: 32px;
+    block-size: 32px;
+    color: var(--color-gray-800);
+
+    @include breakpoint(l) {
+      inline-size: 24px;
+      block-size: 24px;
+    }
+  }
+
+  [popover] {
+    position: fixed;
+    top: anchor(bottom);
+    left: anchor(start);
+    translate: 0 0.5rem;
+    opacity: 0;
+    backdrop-filter: blur(16px);
+    transition-duration: var(--animation-speed-fast);
+    transition-property: opacity, translate, overlay, display;
+    margin-block-start: 2rem;
+    box-shadow: var(--elevation-3);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-s);
+    background-color: hsl(var(--color-background-hsl) / 95%);
+    padding: var(--space-s) var(--space-m);
+    min-inline-size: calc(100vw - calc(var(--space-m) * 4));
+    position-anchor: --lang-trigger;
+    transition-behavior: allow-discrete;
+
+    @include breakpoint(l) {
+      margin-block-start: 0;
+      border: none;
+      min-inline-size: 150px;
+    }
+
+    &:popover-open {
+      translate: 0 0;
+      opacity: 1;
+    }
+
+    @starting-style {
+      &:popover-open {
+        translate: 0 0.5rem;
+        opacity: 0;
+      }
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: block;
+    position: relative;
+    transition: all var(--animation-speed-fast) var(--cubic-bezier);
+    padding-block: 0.5rem;
+    color: var(--color-gray-800);
+    font-size: var(--font-size-1);
+    font-family: var(--font-heading);
+    text-decoration: none;
+
+    @include breakpoint(l) {
+      font-size: var(--font-size--1);
+    }
+
+    &::after {
+      position: absolute;
+      opacity: 0;
+      transition: all var(--animation-speed-fast) var(--cubic-bezier);
+      margin-block: auto;
+      inset-block: 0;
+      inset-inline-start: -0.75rem;
+      box-shadow: 0 0 8px -2px var(--dot-color, transparent);
+      border-radius: 50%;
+      background-color: var(--dot-color, var(--color-gray-800));
+      width: 0.375rem;
+      height: 0.375rem;
+      content: '';
+    }
+
+    &:where(:hover, :focus-visible, .active) {
+      translate: 0.5rem 0;
+      padding-inline-start: 0.5rem;
+
+      @include breakpoint(l) {
+        translate: 0.15rem 0;
+      }
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+</style>

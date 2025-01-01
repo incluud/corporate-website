@@ -19,28 +19,34 @@ body {
   background-color: var(--background-color);
 }
 
-a {
-  color: var(--link-color);
+main a:not([class]),
+footer a:not([class]) {
+  color: var(--color-tertiary-100);
+  text-decoration: underline;
+  transition: all var(--animation-speed-fast) var(--cubic-bezier);
+
+  &:where(:hover, :focus-visible) {
+    color: var(--color-tertiary-200);
+    text-decoration-color: var(--color-tertiary-200);
+  }
 }
 
 main a:not([class]) {
-  color: var(--link-color);
-  text-decoration-color: var(--link-color);
-  @include text-decoration;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
 
   &:where(:hover, :focus-visible) {
-    color: var(--link-hover-color);
-    text-decoration-color: var(--link-hover-color);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
+}
 
-  &.external-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3xs);
+footer a:not([class]) {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 
-    // small visual correction
-    svg {
-      margin-block-start: 3px;
-    }
+  &:where(:hover, :focus-visible) {
+    text-decoration-color: var(--color-tertiary-200);
+    text-underline-offset: 2px;
   }
 }

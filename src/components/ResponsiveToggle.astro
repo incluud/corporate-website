@@ -1,0 +1,105 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
+<button class="responsive-toggle" aria-expanded="false" aria-haspopup="true">
+  <span data-menu-text>{Astro.currentLocale === 'nl' ? 'Menu' : 'Menu'}</span>
+  <Icon name="mdi:menu" size="44px" data-menu-icon />
+  <Icon name="mdi:close" size="44px" data-close-icon style="display: none;" />
+</button>
+
+<script>
+  function initResponsiveToggle() {
+    const toggle = document.querySelector('.responsive-toggle') as HTMLButtonElement
+
+    if (!toggle || toggle.dataset.initialized === 'true') return
+
+    const menuIcon = toggle.querySelector('[data-menu-icon]') as HTMLElement
+    const closeIcon = toggle.querySelector('[data-close-icon]') as HTMLElement
+    const menuText = toggle.querySelector('[data-menu-text]') as HTMLElement
+    const navigation = document.querySelector('.navigation') as HTMLElement
+
+    if (!menuIcon || !closeIcon || !menuText || !navigation) return
+
+    // Type guard to ensure elements exist
+    const elements = {
+      menuIcon,
+      closeIcon,
+      menuText,
+      navigation,
+    } as const
+
+    function handleClick() {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true'
+      const newExpandedState = !isExpanded
+      toggle.setAttribute('aria-expanded', newExpandedState.toString())
+
+      elements.menuIcon.style.display = newExpandedState ? 'none' : 'block'
+      elements.closeIcon.style.display = newExpandedState ? 'block' : 'none'
+      elements.menuText.textContent = newExpandedState
+        ? document.documentElement.lang === 'nl'
+          ? 'Sluiten'
+          : 'Close'
+        : document.documentElement.lang === 'nl'
+          ? 'Menu'
+          : 'Menu'
+      elements.navigation.classList.toggle('open', newExpandedState)
+    }
+
+    toggle.addEventListener('click', handleClick)
+    toggle.dataset.initialized = 'true'
+
+    // Add resize observer
+    const resizeObserver = new ResizeObserver(() => {
+      if (window.innerWidth >= 1024) {
+        elements.navigation.classList.remove('open')
+        elements.menuIcon.style.display = 'block'
+        elements.closeIcon.style.display = 'none'
+        elements.menuText.textContent = 'Menu'
+        toggle.setAttribute('aria-expanded', 'false')
+      }
+    })
+
+    resizeObserver.observe(document.documentElement)
+
+    // Return cleanup function
+    return () => {
+      toggle.removeEventListener('click', handleClick)
+      toggle.dataset.initialized = 'false'
+      resizeObserver.disconnect()
+    }
+  }
+
+  // Initialize
+  let cleanup: (() => void) | undefined
+
+  cleanup = initResponsiveToggle()
+
+  document.addEventListener('astro:page-load', () => {
+    if (cleanup) cleanup()
+    cleanup = initResponsiveToggle()
+  })
+
+  document.addEventListener('astro:before-preparation', () => {
+    if (cleanup) cleanup()
+  })
+</script>
+
+<style lang="scss">
+  @use '../assets/scss/base/breakpoints' as *;
+  @use '../assets/scss/base/mixins' as *;
+
+  .responsive-toggle {
+    display: flex;
+    align-items: center;
+    justify-self: flex-end;
+    gap: var(--space-2xs);
+    font-family: var(--font-heading);
+
+    @include text-decoration(var(--color-gray-1000));
+
+    @include breakpoint(l) {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,126 @@
+---
+import { SkipLinks } from 'accessible-astro-components'
+import { Icon } from 'astro-icon/components'
+import Navigation from './Navigation.astro'
+import ResponsiveToggle from './ResponsiveToggle.astro'
+---
+
+<header>
+  <SkipLinks />
+  <div class="container">
+    <div class="wrapper">
+      <Icon name="logo" width="130px" height="30px" />
+      <ResponsiveToggle />
+      <Navigation />
+    </div>
+    <div class="background"></div>
+  </div>
+</header>
+
+<script>
+  // Declare the type for our custom window property
+  declare global {
+    interface Window {
+      headerObserver?: IntersectionObserver
+    }
+  }
+
+  function initHeader() {
+    const header = document.querySelector('.container')
+
+    // Cleanup old observer if it exists
+    if (window.headerObserver) {
+      window.headerObserver.disconnect()
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        header?.classList.toggle('scrolled', !entry.isIntersecting)
+      },
+      { threshold: [1] }
+    )
+
+    // Store observer reference globally so we can cleanup
+    window.headerObserver = observer
+
+    // Create and observe sentinel
+    const sentinel = document.createElement('div')
+    sentinel.setAttribute('aria-hidden', 'true')
+    document.body.prepend(sentinel)
+    observer.observe(sentinel)
+  }
+
+  // Initial setup
+  initHeader()
+
+  // Re-run on view transitions
+  document.addEventListener('astro:page-load', () => {
+    initHeader()
+  })
+</script>
+
+<style lang="scss" is:global>
+  @use '../assets/scss/base/breakpoints' as *;
+
+  header {
+    .container {
+      position: fixed;
+      z-index: 200;
+      transition: all 0.3s ease;
+      margin-inline: auto;
+      inset-block-start: 0;
+      inset-inline: 0;
+      padding: 0 !important;
+      block-size: var(--header-height);
+
+      @include breakpoint(l) {
+        border-radius: var(--radius-3xl);
+        block-size: auto;
+      }
+
+      &.scrolled {
+        backdrop-filter: blur(16px);
+        box-shadow: var(--elevation-3);
+
+        @include breakpoint(l) {
+          inset-block-start: var(--space-3xs);
+        }
+
+        .background {
+          opacity: 0.6;
+        }
+      }
+    }
+
+    .wrapper {
+      display: grid;
+      position: relative;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      z-index: 1;
+      border-radius: var(--radius-3xl);
+      padding: var(--space-2xs) var(--space-m);
+
+      @include breakpoint(l) {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    .background {
+      position: absolute;
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+      inset: 0;
+      background-color: #424242;
+      inline-size: 100%;
+      block-size: 100%;
+
+      @include breakpoint(l) {
+        border-radius: var(--radius-3xl);
+      }
+    }
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+interface Props {
+  href: string
+}
+
+const { href } = Astro.props
+---
+
+<div class="rainbow-button">
+  <a class="rainbow-button__link" href={href}>
+    <span><slot>Check out our latest projects</slot></span>
+  </a>
+</div>
+
+<style lang="scss">
+  .rainbow-button {
+    position: relative;
+    margin-block-start: var(--space-l);
+
+    &__link {
+      --rainbow-gradient: linear-gradient(115deg, #4fcf70, #fad648, #a767e5, #12bcfe, #44ce7b);
+      --button-width: 325px;
+      --button-padding: 3px;
+      --border-radius: 6px;
+      --inner-radius: 3px;
+      display: block;
+
+      position: relative;
+      z-index: 2;
+      box-sizing: border-box;
+      border-radius: var(--border-radius);
+      padding: var(--button-padding);
+      inline-size: var(--button-width);
+      overflow: hidden;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+
+      &::before {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        background: var(--rainbow-gradient);
+        background-size: 50% 100%;
+        inline-size: 200%;
+        block-size: 100%;
+        content: '';
+      }
+
+      &:where(:hover, :focus-visible) {
+        &::before {
+          animation: rainbow-effect 1s linear infinite;
+        }
+
+        span {
+          letter-spacing: 1px;
+        }
+      }
+
+      span {
+        display: block;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        transition: letter-spacing 0.3s ease;
+        box-sizing: border-box;
+        border-radius: var(--inner-radius);
+        background-color: rgb(28 28 28);
+        padding: var(--space-s) var(--space-m);
+        block-size: 100%;
+        color: var(--color-white);
+        font-size: var(--font-size-0);
+      }
+    }
+  }
+
+  @keyframes rainbow-effect {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>

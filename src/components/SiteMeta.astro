@@ -3,24 +3,42 @@ import { ViewTransitions } from 'astro:transitions'
 
 const { title, description, url, image, author } = Astro.props
 
-let subtitle = 'Accessible Astro Starter'
+type Locale = 'en' | 'nl'
+const locale = (Astro.currentLocale as Locale) || 'en'
+
+const siteName: Record<Locale, string> = {
+  en: 'Incluud - Accessible Open Source Software',
+  nl: 'Incluud - Toegankelijke Open Source Software',
+}
+
+const siteDescription: Record<Locale, string> = {
+  en: 'Open Source accessible software for the web',
+  nl: 'Open Source toegankelijke software voor het web',
+}
+
+const metaDescription = description || siteDescription[locale]
+const pageTitle = title === 'Home' ? siteName[locale] : `${title} - ${siteName[locale]}`
 ---
 
 <!-- general meta -->
-<meta name="title" content={`${title} - ${subtitle}`} />
-<meta name="description" content={description} />
+<meta name="title" content={pageTitle} />
+<meta name="description" content={metaDescription} />
 <meta name="author" content={author} />
 
 <!-- open graph -->
-<meta property="og:title" content={`${title} - ${subtitle}`} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={metaDescription} />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={url} />
 <meta property="og:image" content={Astro.site ? `${Astro.site}${image}` : image} />
 
 <!-- twitter card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={metaDescription} />
+<meta name="twitter:image" content={Astro.site ? `${Astro.site}${image}` : image} />
 
 <!-- page title -->
-<title>{title} - {subtitle}</title>
+<title>{pageTitle}</title>
 
 <ViewTransitions />

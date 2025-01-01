@@ -1,0 +1,128 @@
+---
+import { Media } from 'accessible-astro-components'
+
+interface Props {
+  imgSrc: string
+  reverseImg?: boolean
+}
+
+const { imgSrc, reverseImg = false } = Astro.props
+---
+
+<div class="content-media">
+  <div class="container">
+    <div class={`grid ${reverseImg ? 'reverse' : ''}`}>
+      <div class="image-container">
+        <Media src={imgSrc} />
+      </div>
+      <div class="content">
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style lang="scss" is:global>
+  @use '../assets/scss/base/breakpoints' as *;
+
+  .content-media {
+    padding-block: var(--space-xl);
+
+    @include breakpoint(l) {
+      padding-block: var(--space-2xl);
+    }
+
+    .container {
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+
+        @include breakpoint(l) {
+          grid-template-columns: repeat(2, 1fr);
+          gap: var(--space-2xl);
+
+          &.reverse {
+            .image-container {
+              order: 2;
+            }
+
+            .content {
+              order: 1;
+            }
+          }
+        }
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-xs);
+      font-size: var(--font-size-1);
+      line-height: var(--font-size-2);
+    }
+
+    p {
+      text-wrap: pretty;
+    }
+
+    :global(img) {
+      border-radius: var(--radius-m);
+    }
+
+    .container .image-container:first-child {
+      rotate: -2deg;
+    }
+
+    .container .image-container:last-child {
+      rotate: 2deg;
+    }
+  }
+
+  .image-container {
+    position: relative;
+    padding: 1rem;
+    inline-size: calc(100% - 1rem);
+    block-size: fit-content;
+
+    @include breakpoint(l) {
+      inline-size: calc(100% - 0.5rem);
+    }
+
+    > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+    }
+
+    &::before {
+      opacity: 0.8;
+      z-index: 1;
+      inset: 0;
+      border-radius: var(--radius-m);
+      background-color: var(--color-gray-1000);
+    }
+
+    &::after {
+      rotate: 2deg;
+      opacity: 0.2;
+      z-index: 0;
+      inset: 1rem -0.85rem -0.85rem 1rem;
+      border-radius: var(--radius-m);
+      background-color: var(--color-gray-1000);
+    }
+
+    img {
+      inline-size: 100%;
+      max-block-size: 400px;
+      object-fit: cover;
+    }
+  }
+</style>

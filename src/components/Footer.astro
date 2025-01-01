@@ -1,0 +1,125 @@
+---
+import { Modal } from 'accessible-astro-components'
+
+const currentYear = new Date().getFullYear()
+---
+
+<footer>
+  <div class="container">
+    <p>
+      &copy; {currentYear} - Incluud | {
+        Astro.currentLocale === 'nl' ? 'Gemaakt met het' : 'Made with the'
+      }
+      <a href="https://accessible-astro.netlify.app/">Accessible Astro Starter</a>
+      {Astro.currentLocale === 'nl' ? 'thema' : 'theme'} ❤️
+    </p>
+    <p>
+      {
+        Astro.currentLocale === 'nl'
+          ? 'Het begint nog steeds met koffie. Alleen nu cafeïnevrij'
+          : 'It still starts with coffee. Just decaffeinated'
+      }
+      <button id="iswc-logo-legacy-button">
+        <img
+          src="/iswc-logo-legacy.png"
+          alt={Astro.currentLocale === 'nl'
+            ? 'Knipoog naar ons oude logo, het IT Starts With Coffee logo'
+            : 'Nod to our old logo, the IT Starts With Coffee logo'}
+        />
+      </button>
+    </p>
+    <Modal
+      triggerId="iswc-logo-legacy-button"
+      title={Astro.currentLocale === 'nl' ? 'IT Starts With Coffee?' : 'IT Starts With Coffee?'}
+    >
+      {
+        Astro.currentLocale === 'nl' ? (
+          <>
+            <p>
+              Van 2011-2018 runden Peter en Mark een bedrijf genaamd IT Starts With Coffee. Verkocht
+              in 2018 en nu weer samen werkend aan Incluud. We houden allebei van koffie en de naam
+              is een knipoog naar ons oude logo, hoewel we het tegenwoordig allebei cafeïnevrij
+              drinken.
+            </p>
+            <p>
+              IT Starts With Coffee ging over het bouwen van WordPress websites. Uiteindelijk waren
+              we een team van 6 mensen met een eigen kantoor, maar besloten we dat we terug wilden
+              naar de kern van het programmeren. Het is dit hart dat de ideeën achter Incluud en de
+              Accessible Astro projecten heeft aangewakkerd.
+            </p>
+          </>
+        ) : (
+          <>
+            <p>
+              From 2011-2018 Peter and Mark were running a company called IT Starts With Coffee.
+              Sold in 2018 and now back together again working on Incluud. We both love coffee and
+              the name is a nod to our old logo, although nowadays we both drink it decaffeinated.
+            </p>
+            <p>
+              IT Starts With Coffee was all about building WordPress websites. Eventually we were a
+              team of 6 people with our own office, but decided we wanted to get back to the heart
+              of programming. It is this heart that ignited the ideas behind Incluud and the
+              Accessible Astro projects.
+            </p>
+          </>
+        )
+      }
+    </Modal>
+  </div>
+</footer>
+
+<style lang="scss">
+  @use '../assets/scss/base/breakpoints' as *;
+
+  footer {
+    padding-block: var(--space-3xl) var(--space-xl);
+    text-align: center;
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+
+      @include breakpoint(l) {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    p {
+      line-height: 2;
+
+      @include breakpoint(l) {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3xs);
+      }
+
+      &:has(button) {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3xs);
+      }
+
+      button {
+        margin-block-start: 7px;
+      }
+    }
+
+    img {
+      display: inline-block;
+      inline-size: 24px;
+    }
+
+    button {
+      transition: all var(--animation-speed-fast) var(--cubic-bezier);
+      cursor: pointer;
+
+      &:where(:hover, :focus-visible) {
+        rotate: 2deg;
+        scale: 5;
+      }
+    }
+  }
+</style>
