@@ -1,6 +1,4 @@
 ---
-import { ViewTransitions } from 'astro:transitions'
-
 const { title, description, url, image, author } = Astro.props
 
 type Locale = 'en' | 'nl'
@@ -41,4 +39,6 @@ const pageTitle = title === 'Home' ? siteName[locale] : `${title} - ${siteName[l
 <!-- page title -->
 <title>{pageTitle}</title>
 
-<ViewTransitions />
+<!-- linkedin specific -->
+<meta property="article:author" content={author} />
+<meta name="linkedin:author" content={author} />
