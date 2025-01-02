@@ -29,17 +29,6 @@ const {
 
 <style lang="scss">
   .hero {
-    // oklch values
-    --lch-white: 100% 0 0;
-    --lch-black: 0% 0 0;
-    --lch-blue: 69% 0.15 255;
-    --lch-lightblue: 80% 0.1 255;
-    --lch-darkblue: 65% 0.2 255;
-    --lch-indigo: 76% 0.1 276;
-    --lch-violet: 89% 0.06 291;
-    --lch-background-light: 90% 0 0;
-    --lch-background-dark: 10% 0 0;
-
     // colors
     --color-white: oklch(var(--lch-white));
     --color-black: oklch(var(--lch-black));
@@ -68,19 +57,6 @@ const {
       oklch(var(--lch-lightblue)) 20%,
       oklch(var(--lch-violet)) 25%,
       oklch(var(--lch-blue)) 30%
-    );
-
-    // Add these new gradient variables
-    --gradient-primary: linear-gradient(
-      160deg,
-      oklch(65% 0.2 280deg) 0%,
-      oklch(70% 0.2 260deg) 50%,
-      oklch(75% 0.2 240deg) 100%
-    );
-    --gradient-secondary: linear-gradient(
-      120deg,
-      oklch(60% 0.15 300deg) 0%,
-      oklch(65% 0.15 280deg) 100%
     );
 
     position: relative;

@@ -78,10 +78,42 @@ const truncatedDescription = description ? description.substring(0, 100) : undef
     }
 
     &#mission {
+      position: relative;
+      overflow-x: clip;
+
+      &::before,
+      &::after {
+        position: absolute;
+        transform: translateZ(0);
+        opacity: 0.15;
+        z-index: -1;
+        filter: blur(6rem);
+        border-radius: 50%;
+        content: '';
+      }
+
+      &::before {
+        inset-block-start: 20%;
+        inset-inline-end: -10%;
+        background: var(--gradient-secondary);
+        inline-size: 40vw;
+        block-size: 40vw;
+      }
+
+      &::after {
+        inset-block-end: 10%;
+        inset-inline-start: -10%;
+        background: var(--gradient-primary);
+        inline-size: 30vw;
+        block-size: 30vw;
+      }
+
       .container {
         display: flex;
+        position: relative;
         flex-direction: column;
         align-items: center;
+        z-index: 1;
       }
 
       p {
