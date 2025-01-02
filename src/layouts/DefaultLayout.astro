@@ -45,6 +45,8 @@ const truncatedDescription = description ? description.substring(0, 100) : undef
 </html>
 
 <style lang="scss" is:global>
+  @use '../assets/scss/base/breakpoints' as *;
+
   body {
     position: relative;
     overflow-x: hidden;
@@ -94,18 +96,40 @@ const truncatedDescription = description ? description.substring(0, 100) : undef
 
       &::before {
         inset-block-start: 20%;
-        inset-inline-end: -10%;
+        inset-inline-end: -50%;
         background: var(--gradient-secondary);
-        inline-size: 40vw;
-        block-size: 40vw;
+        inline-size: 500px;
+        block-size: 500px;
+
+        @include breakpoint(m) {
+          inset-inline-end: -30%;
+        }
+
+        @include breakpoint(l) {
+          inset-block-start: 20%;
+          inset-inline-end: -10%;
+          inline-size: 40vw;
+          block-size: 40vw;
+        }
       }
 
       &::after {
         inset-block-end: 10%;
-        inset-inline-start: -10%;
+        inset-inline-start: -50%;
         background: var(--gradient-primary);
-        inline-size: 30vw;
-        block-size: 30vw;
+        inline-size: 500px;
+        block-size: 500px;
+
+        @include breakpoint(m) {
+          inset-inline-start: -30%;
+        }
+
+        @include breakpoint(l) {
+          inset-block-end: 10%;
+          inset-inline-start: -10%;
+          inline-size: 40vw;
+          block-size: 40vw;
+        }
       }
 
       .container {

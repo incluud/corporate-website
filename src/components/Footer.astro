@@ -72,8 +72,32 @@ const currentYear = new Date().getFullYear()
   @use '../assets/scss/base/breakpoints' as *;
 
   footer {
+    position: relative;
+    bottom: 0;
     padding-block: var(--space-3xl) var(--space-xl);
+    overflow-x: clip;
     text-align: center;
+
+    &::before {
+      position: absolute;
+      transform: translateZ(0);
+      opacity: 0.1;
+      z-index: -1;
+      filter: blur(8rem);
+      margin-inline: auto;
+      inset: auto 0 0 0;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      inline-size: 500px;
+      block-size: 500px;
+      pointer-events: none;
+      content: '';
+
+      @include breakpoint(l) {
+        inline-size: 30vw;
+        block-size: 30vw;
+      }
+    }
 
     .container {
       display: flex;

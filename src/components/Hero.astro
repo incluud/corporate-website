@@ -28,6 +28,8 @@ const {
 </section>
 
 <style lang="scss">
+  @use '../assets/scss/base/breakpoints' as *;
+
   .hero {
     // colors
     --color-white: oklch(var(--lch-white));
@@ -74,19 +76,41 @@ const {
     }
 
     &::before {
-      inset-block-start: 40%;
-      inset-inline-start: -10%;
-      background: var(--gradient-primary);
-      inline-size: 50vw;
-      block-size: 50vw;
+      inset-block-start: 20%;
+      inset-inline-end: -50%;
+      background: var(--gradient-secondary);
+      inline-size: 500px;
+      block-size: 500px;
+
+      @include breakpoint(m) {
+        inset-inline-end: -30%;
+      }
+
+      @include breakpoint(l) {
+        inset-block-start: 20%;
+        inset-inline-end: -10%;
+        inline-size: 40vw;
+        block-size: 40vw;
+      }
     }
 
     &::after {
-      inset-block-end: 30%;
-      inset-inline-end: -10%;
-      background: var(--gradient-secondary);
-      inline-size: 40vw;
-      block-size: 40vw;
+      inset-block-end: 10%;
+      inset-inline-start: -50%;
+      background: var(--gradient-primary);
+      inline-size: 500px;
+      block-size: 500px;
+
+      @include breakpoint(m) {
+        inset-inline-start: -30%;
+      }
+
+      @include breakpoint(l) {
+        inset-block-end: 10%;
+        inset-inline-start: -10%;
+        inline-size: 40vw;
+        block-size: 40vw;
+      }
     }
 
     &__inner {
