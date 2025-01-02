@@ -1,23 +1,43 @@
 ---
-import MotionToggle from './MotionToggle.astro'
-import LanguageDropdown from './LanguageDropdown.astro'
 import { Icon } from 'astro-icon/components'
+import LanguageDropdown from './LanguageDropdown.astro'
+import MotionToggle from './MotionToggle.astro'
+
+const menuItems = {
+  en: {
+    home: 'Home',
+    projects: 'Projects',
+    mission: 'Our mission',
+    whoWeAre: 'Who we are',
+    github: 'Go to our GitHub',
+  },
+  nl: {
+    home: 'Home',
+    projects: 'Projecten',
+    mission: 'Onze missie',
+    whoWeAre: 'Wie zijn wij',
+    github: 'Ga naar onze GitHub',
+  },
+}
+
+const locale = (Astro.currentLocale as 'en' | 'nl') || 'en'
+const items = menuItems[locale]
 ---
 
 <div class="navigation">
   <nav class="menu" aria-label="Main">
     <ul class="menu__list">
       <li>
-        <a class="menu__link" href="#hero" data-nav-link>Home</a>
+        <a class="menu__link" href="#hero" data-nav-link>{items.home}</a>
       </li>
       <li>
-        <a class="menu__link" href="#projects" data-nav-link>Projects</a>
+        <a class="menu__link" href="#projects" data-nav-link>{items.projects}</a>
       </li>
       <li>
-        <a class="menu__link" href="#mission" data-nav-link>Our mission</a>
+        <a class="menu__link" href="#mission" data-nav-link>{items.mission}</a>
       </li>
       <li>
-        <a class="menu__link" href="#who-we-are" data-nav-link>Who are we</a>
+        <a class="menu__link" href="#who-we-are" data-nav-link>{items.whoWeAre}</a>
       </li>
       <li>
         <LanguageDropdown />
@@ -25,7 +45,7 @@ import { Icon } from 'astro-icon/components'
       <li>
         <a class="menu__link" href="https://github.com/incluud">
           <Icon name="mdi:github" />
-          <span class="sr-only">Go to our GitHub</span>
+          <span class="sr-only">{items.github}</span>
         </a>
       </li>
     </ul>
@@ -41,6 +61,19 @@ import { Icon } from 'astro-icon/components'
       document.querySelectorAll('[data-nav-link]').forEach((link) => {
         const href = link.getAttribute('href')?.replace(/^\/[a-z]{2}/, '') || ''
         link.setAttribute('href', `${currentLang}${href}`)
+
+        // Add smooth scroll behavior for anchor links
+        link.addEventListener('click', (e) => {
+          const hash = link.getAttribute('href')?.split('#')[1]
+          if (hash) {
+            e.preventDefault()
+            const target = document.getElementById(hash)
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth' })
+              history.pushState(null, '', `${currentLang}#${hash}`)
+            }
+          }
+        })
       })
     }
 
