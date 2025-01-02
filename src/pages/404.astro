@@ -1,9 +1,43 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro'
+
+const locale = Astro.currentLocale || 'en'
+
+const translations = {
+  en: {
+    pageNotFound: 'Page not found',
+    goBack: 'Go back to the homepage',
+  },
+  nl: {
+    pageNotFound: 'Pagina niet gevonden',
+    goBack: 'Terug naar de homepage',
+  },
+}
+
+const t = translations[locale]
 ---
 
 <DefaultLayout title="404">
   <section class="container">
     <h1>404</h1>
+    <p>{t.pageNotFound}</p>
+    <a href="/">{t.goBack}</a>
   </section>
 </DefaultLayout>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-m);
+    margin-block-start: 0 !important;
+    padding-block-start: calc(var(--space-3xl) * 3);
+
+    p,
+    a {
+      font-size: var(--font-size-2);
+    }
+  }
+</style>
