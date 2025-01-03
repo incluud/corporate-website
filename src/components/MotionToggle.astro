@@ -9,7 +9,7 @@ const prefersReducedMotion = Astro.cookies.get('prefers-reduced-motion')?.boolea
   aria-pressed={prefersReducedMotion ? 'true' : 'false'}
 >
   <span class="motion-toggle__indicator"></span>
-  {Astro.currentLocale === 'nl' ? 'Minder Beweging' : 'Reduce Motion'}
+  {Astro.currentLocale === 'nl' ? 'Minder beweging' : 'Reduce motion'}
 </button>
 
 <script>
