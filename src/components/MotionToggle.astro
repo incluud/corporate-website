@@ -9,7 +9,7 @@ const prefersReducedMotion = Astro.cookies.get('prefers-reduced-motion')?.boolea
   aria-pressed={prefersReducedMotion ? 'true' : 'false'}
 >
   <span class="motion-toggle__indicator"></span>
-  {Astro.currentLocale === 'nl' ? 'Verminder Beweging' : 'Reduce Motion'}
+  {Astro.currentLocale === 'nl' ? 'Minder Beweging' : 'Reduce Motion'}
 </button>
 
 <script>
@@ -96,11 +96,13 @@ const prefersReducedMotion = Astro.cookies.get('prefers-reduced-motion')?.boolea
     --led-on: hsl(150deg 100% 50%);
     --led-off: var(--color-gray-500);
     --led-off-text: var(--color-gray-700);
-    transition: all var(--animation-speed-fast) var(--cubic-bezier);
+
+    transition-duration: var(--animation-speed-fast);
+    transition-property: rotate, scale, border-color;
+    transition-timing-function: var(--cubic-bezier);
     border: 1px solid var(--color-gray-500);
     border-radius: var(--radius-3xl);
     padding: 0.05rem 0.55rem;
-
     inline-size: fit-content;
     font-size: var(--font-size--1);
 

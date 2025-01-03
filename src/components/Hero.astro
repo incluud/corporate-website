@@ -67,10 +67,10 @@ const {
     &::before,
     &::after {
       position: absolute;
-      transform: translateZ(0);
       opacity: 0.2;
       z-index: -1;
       filter: blur(8rem);
+      will-change: transform;
       border-radius: 50%;
       content: '';
     }
@@ -184,13 +184,10 @@ const {
 
     .backlights {
       position: absolute;
-      opacity: 0.5;
-      mask-image: radial-gradient(
-        ellipse at 100% 0,
-        var(--color-black) 10%,
-        var(--color-transparent) 70%
-      );
+      transform: translateZ(0);
+      mask-image: radial-gradient(ellipse at 100% 0, rgb(0 0 0 / 0.5) 0%, transparent 70%);
       filter: blur(10px);
+      will-change: transform;
       inset: -1rem;
       background-image: var(--dark-gradient), var(--aurora);
       background-position:
@@ -200,8 +197,10 @@ const {
 
       &::after {
         position: absolute;
+        opacity: 0.5;
         mix-blend-mode: difference;
         animation: aurora 90s linear infinite;
+        will-change: background-position;
         inset: 0;
         background-image: var(--dark-gradient), var(--aurora);
         background-size: 200%, 100%;

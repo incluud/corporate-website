@@ -21,10 +21,11 @@ const currentYear = new Date().getFullYear()
       }
       <button id="iswc-logo-legacy-button">
         <img
-          src="/iswc-logo-legacy.png"
+          src="/iswc-favicon-legacy.png"
           alt={Astro.currentLocale === 'nl'
             ? 'Knipoog naar ons oude logo, het IT Starts With Coffee logo'
             : 'Nod to our old logo, the IT Starts With Coffee logo'}
+          loading="lazy"
         />
       </button>
     </p>
@@ -41,11 +42,12 @@ const currentYear = new Date().getFullYear()
               is een knipoog naar ons oude logo, hoewel we het tegenwoordig allebei cafeïnevrij
               drinken.
             </p>
+            <img src="/iswc-logo-legacy.png" alt="IT Starts With Coffee logo" loading="lazy" />
             <p>
               IT Starts With Coffee ging over het bouwen van WordPress websites. Uiteindelijk waren
               we een team van 6 mensen met een eigen kantoor, maar besloten we dat we terug wilden
-              naar de kern van het programmeren. Het is dit hart dat de ideeën achter Incluud en de
-              Accessible Astro projecten heeft aangewakkerd.
+              naar de kern van het programmeren. Het is deze passie dat de ideeën achter Incluud en
+              de Accessible Astro projecten heeft aangewakkerd.
             </p>
           </>
         ) : (
@@ -55,6 +57,7 @@ const currentYear = new Date().getFullYear()
               Sold in 2018 and now back together again working on Incluud. We both love coffee and
               the name is a nod to our old logo, although nowadays we both drink it decaffeinated.
             </p>
+            <img src="/iswc-logo-legacy.png" alt="IT Starts With Coffee logo" loading="lazy" />
             <p>
               IT Starts With Coffee was all about building WordPress websites. Eventually we were a
               team of 6 people with our own office, but decided we wanted to get back to the heart
@@ -128,12 +131,13 @@ const currentYear = new Date().getFullYear()
 
       button {
         margin-block-start: 7px;
-      }
-    }
 
-    img {
-      display: inline-block;
-      inline-size: 24px;
+        img {
+          display: inline-block;
+          inline-size: 24px;
+          block-size: 24px;
+        }
+      }
     }
 
     button {

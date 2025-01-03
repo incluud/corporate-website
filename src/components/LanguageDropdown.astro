@@ -187,7 +187,9 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
     position: relative;
     align-items: center;
     gap: 0.15rem;
-    transition: all var(--animation-speed-fast) var(--cubic-bezier);
+    transition-duration: var(--animation-speed-fast);
+    transition-property: translate, padding-inline-start;
+    transition-timing-function: var(--cubic-bezier);
     margin-block-end: -1rem;
     padding: 0.5rem 0;
     color: var(--color-gray-800);
@@ -197,6 +199,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
     anchor-name: --lang-trigger;
 
     @include breakpoint(l) {
+      margin-inline-end: -0.5rem;
       margin-block-end: 0;
       padding: 0.5rem 1rem;
     }

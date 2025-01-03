@@ -181,7 +181,7 @@ const items = menuItems[locale]
     inset-inline-start: var(--space-m);
     box-shadow: var(--elevation-3);
     border-radius: var(--radius-m);
-    background-color: hsl(var(--color-background-hsl) / 95%);
+    background-color: hsl(var(--color-background-hsl) / 100%);
     padding: var(--space-m);
     inline-size: calc(100% - var(--space-m) * 2);
 
@@ -240,7 +240,9 @@ const items = menuItems[locale]
 
   a {
     position: relative;
-    transition: all var(--animation-speed-fast) var(--cubic-bezier);
+    transition-duration: var(--animation-speed-fast);
+    transition-property: translate, padding-inline-start;
+    transition-timing-function: var(--cubic-bezier);
     padding: 0.5rem 0;
     color: var(--color-gray-800);
     font-size: var(--font-size-1);

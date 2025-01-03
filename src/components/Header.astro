@@ -125,10 +125,6 @@ import ResponsiveToggle from './ResponsiveToggle.astro'
     }
 
     .skip-links a {
-      filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
-      transition: all var(--animation-speed-fast) var(--cubic-bezier);
-      transition: all var(--animation-speed-fast) var(--cubic-bezier);
-      box-shadow: var(--elevation-3);
       background-color: hsl(var(--color-background-hsl) / 95%);
       color: var(--color-tertiary-100);
       text-decoration: underline;
@@ -138,6 +134,7 @@ import ResponsiveToggle from './ResponsiveToggle.astro'
       &:where(:hover, :focus-visible) {
         color: var(--color-tertiary-200);
         text-decoration-color: var(--color-tertiary-200);
+        @include outline;
       }
     }
   }
