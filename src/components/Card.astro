@@ -51,17 +51,17 @@ const formattedTitle = repo ? formatRepoName(repo.name) : title
           <div
             class="project-card__stats"
             aria-label={
-              Astro.currentLocale === 'nl' ? 'Repository statistieken' : 'Repository statistics'
+              Astro.currentLocale === 'nl'
+                ? `Repository statistieken: ${repo.stargazers_count} sterren, ${repo.forks_count} forks`
+                : `Repository statistics: ${repo.stargazers_count} stars, ${repo.forks_count} forks`
             }
           >
             <div class="project-card__stat">
               <Icon name="mdi:star" size="24" />
-              <span class="sr-only">{Astro.currentLocale === 'nl' ? 'Sterren' : 'Stars'}</span>
               <span>{repo.stargazers_count}</span>
             </div>
             <div class="project-card__stat">
               <Icon name="mdi:source-fork" size="24" />
-              <span class="sr-only">{Astro.currentLocale === 'nl' ? 'Forks' : 'Forks'}</span>
               <span>{repo.forks_count}</span>
             </div>
           </div>

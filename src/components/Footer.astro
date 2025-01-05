@@ -23,8 +23,8 @@ const currentYear = new Date().getFullYear()
         <img
           src="/iswc-favicon-legacy.png"
           alt={Astro.currentLocale === 'nl'
-            ? 'Knipoog naar ons oude logo, het IT Starts With Coffee logo'
-            : 'Nod to our old logo, the IT Starts With Coffee logo'}
+            ? 'Knipoog naar ons oude bedrijf, IT Starts With Coffee'
+            : 'Nod to our old company, IT Starts With Coffee'}
           loading="lazy"
         />
       </button>
@@ -32,6 +32,7 @@ const currentYear = new Date().getFullYear()
     <Modal
       triggerId="iswc-logo-legacy-button"
       title={Astro.currentLocale === 'nl' ? 'IT Starts With Coffee?' : 'IT Starts With Coffee?'}
+      closeText={Astro.currentLocale === 'nl' ? 'Sluiten' : 'Close'}
     >
       {
         Astro.currentLocale === 'nl' ? (
