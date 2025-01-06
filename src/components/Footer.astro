@@ -113,6 +113,14 @@ const currentYear = new Date().getFullYear()
         flex-direction: row;
         justify-content: space-between;
       }
+
+      > p:has(button) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-3xs);
+      }
     }
 
     p {
