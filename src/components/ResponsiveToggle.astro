@@ -29,7 +29,16 @@ import { Icon } from 'astro-icon/components'
       navigation,
     } as const
 
-    function handleClick() {
+    function closeMenu() {
+      toggle.setAttribute('aria-expanded', 'false')
+      elements.menuIcon.style.display = 'block'
+      elements.closeIcon.style.display = 'none'
+      elements.menuText.textContent = document.documentElement.lang === 'nl' ? 'Menu' : 'Menu'
+      elements.navigation.classList.remove('open')
+    }
+
+    function handleClick(event: MouseEvent) {
+      event.stopPropagation()
       const isExpanded = toggle.getAttribute('aria-expanded') === 'true'
       const newExpandedState = !isExpanded
       toggle.setAttribute('aria-expanded', newExpandedState.toString())
@@ -46,7 +55,25 @@ import { Icon } from 'astro-icon/components'
       elements.navigation.classList.toggle('open', newExpandedState)
     }
 
+    // Close menu when clicking outside
+    function handleDocumentClick(event: MouseEvent) {
+      const target = event.target as HTMLElement
+      if (!elements.navigation.contains(target) && !toggle.contains(target)) {
+        closeMenu()
+      }
+    }
+
+    // Close menu when focus moves outside of navigation
+    function handleFocusOut(event: FocusEvent) {
+      const nextElement = event.relatedTarget as HTMLElement
+      if (!elements.navigation.contains(nextElement) && !toggle.contains(nextElement)) {
+        closeMenu()
+      }
+    }
+
     toggle.addEventListener('click', handleClick)
+    document.addEventListener('click', handleDocumentClick)
+    elements.navigation.addEventListener('focusout', handleFocusOut)
     toggle.dataset.initialized = 'true'
 
     // Add resize observer
@@ -62,9 +89,11 @@ import { Icon } from 'astro-icon/components'
 
     resizeObserver.observe(document.documentElement)
 
-    // Return cleanup function
+    // Update cleanup function
     return () => {
       toggle.removeEventListener('click', handleClick)
+      document.removeEventListener('click', handleDocumentClick)
+      elements.navigation.removeEventListener('focusout', handleFocusOut)
       toggle.dataset.initialized = 'false'
       resizeObserver.disconnect()
     }
