@@ -28,13 +28,13 @@ const pageTitle = title === 'Home' ? siteName[locale] : `${title} - ${siteName[l
 <meta property="og:description" content={metaDescription} />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={url} />
-<meta property="og:image" content={Astro.site ? `${Astro.site}${image}` : image} />
+<meta property="og:image" content={`${Astro.site}${image}`} />
 
 <!-- twitter card -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={metaDescription} />
-<meta name="twitter:image" content={Astro.site ? `${Astro.site}${image}` : image} />
+<meta name="twitter:image" content={`${Astro.site}${image}`} />
 
 <!-- page title -->
 <title>{pageTitle}</title>
