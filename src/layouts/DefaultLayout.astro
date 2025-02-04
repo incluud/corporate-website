@@ -7,7 +7,8 @@ import Footer from '../components/Footer.astro'
 const {
   title = 'Home',
   description,
-  image = '/shared/social-preview-image.png',
+  url = Astro.site,
+  image = 'shared/social-preview-image.png',
   author = 'Incluud',
 } = Astro.props
 
@@ -27,9 +28,7 @@ const truncatedDescription = description ? description.substring(0, 100) : undef
     <SiteMeta
       title={title}
       description={truncatedDescription}
-      url={Astro.site
-        ? `${Astro.site}/${title.toLowerCase().replaceAll(' ', '-')}`
-        : `https://incluud.com/${title.toLowerCase().replaceAll(' ', '-')}`}
+      url={url}
       image={image}
       author={author}
     />
