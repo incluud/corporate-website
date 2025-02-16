@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@sentry/astro": "^9.1.0",
     "accessible-astro-components": "^3.0.1",
     "astro": "^5.1.1"
   },
