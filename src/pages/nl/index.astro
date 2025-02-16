@@ -7,9 +7,10 @@ import { getRepository } from '../../utils/github'
 import { Icon } from 'astro-icon/components'
 
 const repos = await Promise.all([
-  getRepository('markteekman', 'accessible-astro-starter'),
-  getRepository('markteekman', 'accessible-astro-components'),
-  getRepository('markteekman', 'accessible-astro-dashboard'),
+  getRepository('incluud', 'accessible-astro-starter'),
+  getRepository('incluud', 'accessible-astro-components'),
+  getRepository('incluud', 'accessible-astro-dashboard'),
+  getRepository('incluud', 'accessible-astro-docs'),
 ])
 ---
 
@@ -32,6 +33,8 @@ const repos = await Promise.all([
                 'Een verzameling toegankelijke componenten voor Astro projecten met ingebouwde ARIA attributen, keyboard navigatie en interactieve elementen. Gemakkelijk te implementeren en aan te passen aan jouw behoeften.',
               'accessible-astro-dashboard':
                 'Een toegankelijk admin dashboard thema voor Astro met een inlogpagina en dashboard overzicht. Bevat toegankelijkheidsfuncties zoals landmarks, verbeterde focus-outline en skip-links navigatie.',
+              'accessible-astro-docs':
+                "Officiële documentatie website voor alle Accessible Astro Projecten, waaronder de Starter, Dashboard en Components. Gebouwd met Astro's Starlight thema!",
             }
             return (
               <Card
