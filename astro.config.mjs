@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config'
 import compress from 'astro-compress'
 import icon from 'astro-icon'
 import sentry from '@sentry/astro'
+import vue from '@astrojs/vue'
 import dotenv from 'dotenv'
 
 // Load the environment variables
@@ -14,6 +15,7 @@ export default defineConfig({
   integrations: [
     icon(),
     compress(),
+    vue(),
     sentry({
       dsn: process.env.SENTRY_DSN,
       environment: process.env.SENTRY_ENVIRONMENT,
@@ -26,5 +28,11 @@ export default defineConfig({
   i18n: {
     locales: ['en', 'nl'],
     defaultLocale: 'en',
+  },
+  vite: {
+    envPrefix: [
+      'PUBLIC_',
+      'GITHUB_TOKEN', // Allow GITHUB_TOKEN to be exposed to client
+    ],
   },
 })

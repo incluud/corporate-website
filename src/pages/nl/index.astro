@@ -12,6 +12,18 @@ const repos = await Promise.all([
   getRepository('incluud', 'accessible-astro-dashboard'),
   getRepository('incluud', 'accessible-astro-docs'),
 ])
+
+// Type-safe descriptions object
+const descriptions: Record<string, string> = {
+  'accessible-astro-starter':
+    'Een toegankelijk starter thema voor Astro 5.0 met toegankelijkheidsfuncties zoals landmarks, verbeterde focus-outline en skip-links navigatie. Wordt geleverd met Tailwind, Prettier en ESLint ondersteuning.',
+  'accessible-astro-components':
+    'Een verzameling toegankelijke componenten voor Astro projecten met ingebouwde ARIA attributen, keyboard navigatie en interactieve elementen. Gemakkelijk te implementeren en aan te passen aan jouw behoeften.',
+  'accessible-astro-dashboard':
+    'Een toegankelijk admin dashboard thema voor Astro met een inlogpagina en dashboard overzicht. Bevat toegankelijkheidsfuncties zoals landmarks, verbeterde focus-outline en skip-links navigatie.',
+  'accessible-astro-docs':
+    "Officiële documentatie website voor alle Accessible Astro Projecten, waaronder de Starter, Dashboard en Components. Gebouwd met Astro's Starlight thema!",
+}
 ---
 
 <DefaultLayout title="Home">
@@ -26,16 +38,6 @@ const repos = await Promise.all([
       <div class="card-grid">
         {
           repos.map((repo) => {
-            const descriptions = {
-              'accessible-astro-starter':
-                'Een toegankelijk starter thema voor Astro 5.0 met toegankelijkheidsfuncties zoals landmarks, verbeterde focus-outline en skip-links navigatie. Wordt geleverd met Tailwind, Prettier en ESLint ondersteuning.',
-              'accessible-astro-components':
-                'Een verzameling toegankelijke componenten voor Astro projecten met ingebouwde ARIA attributen, keyboard navigatie en interactieve elementen. Gemakkelijk te implementeren en aan te passen aan jouw behoeften.',
-              'accessible-astro-dashboard':
-                'Een toegankelijk admin dashboard thema voor Astro met een inlogpagina en dashboard overzicht. Bevat toegankelijkheidsfuncties zoals landmarks, verbeterde focus-outline en skip-links navigatie.',
-              'accessible-astro-docs':
-                "Officiële documentatie website voor alle Accessible Astro Projecten, waaronder de Starter, Dashboard en Components. Gebouwd met Astro's Starlight thema!",
-            }
             return (
               <Card
                 href={repo.html_url}

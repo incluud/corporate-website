@@ -1,7 +1,7 @@
 ---
 import type { GitHubRepo } from '../utils/github'
 import Badge from './Badge.astro'
-import { Icon } from 'astro-icon/components'
+import GitHubStats from './GitHubStats.vue'
 
 interface Props {
   repo?: GitHubRepo
@@ -48,23 +48,13 @@ const formattedTitle = repo ? formatRepoName(repo.name) : title
           <p>{description || repo?.description}</p>
         </div>
         {repo && (
-          <div
-            class="project-card__stats"
-            aria-label={
-              Astro.currentLocale === 'nl'
-                ? `Repository statistieken: ${repo.stargazers_count} sterren, ${repo.forks_count} forks`
-                : `Repository statistics: ${repo.stargazers_count} stars, ${repo.forks_count} forks`
-            }
-          >
-            <div class="project-card__stat">
-              <Icon name="mdi:star" size="24" />
-              <span>{repo.stargazers_count}</span>
-            </div>
-            <div class="project-card__stat">
-              <Icon name="mdi:source-fork" size="24" />
-              <span>{repo.forks_count}</span>
-            </div>
-          </div>
+          <GitHubStats
+            client:idle
+            owner="incluud"
+            repo={repo.name}
+            initialStars={repo.stargazers_count}
+            initialForks={repo.forks_count}
+          />
         )}
       </div>
       <slot />
@@ -199,18 +189,5 @@ const formattedTitle = repo ? formatRepoName(repo.name) : title
       font-size: var(--font-size-1);
       line-height: 1.5;
     }
-  }
-
-  .project-card__stats {
-    display: flex;
-    gap: var(--space-xs);
-    margin-block-start: var(--space-m);
-  }
-
-  .project-card__stat {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2xs);
-    color: var(--color-text-offset);
   }
 </style>

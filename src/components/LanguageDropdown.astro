@@ -1,6 +1,17 @@
 ---
 import { Icon } from 'astro-icon/components'
-import { getRelativeLocaleUrl } from 'astro:i18n'
+
+const currentPath = Astro.url.pathname
+const currentLocale = Astro.currentLocale
+const isNL = currentLocale === 'nl'
+
+// Function to get the path for a different locale
+function getLocalePath(targetLocale: string) {
+  if (targetLocale === 'nl') {
+    return currentPath.startsWith('/nl/') ? currentPath : `/nl${currentPath}`
+  }
+  return currentPath.replace(/^\/nl/, '') || '/'
+}
 ---
 
 <div class="lang-wrapper">
@@ -13,7 +24,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
     <Icon name="mdi:web" size="24" />
     <span class="sr-only">
       {
-        Astro.currentLocale === 'nl'
+        isNL
           ? 'Kies taal, huidige taal is Nederlands'
           : 'Choose language, current language is English'
       }
@@ -23,14 +34,10 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
   <div id="lang-dropdown" popover>
     <ul>
       <li>
-        <a href={getRelativeLocaleUrl('en')} class:list={[{ active: Astro.currentLocale === 'en' }]}
-          >English</a
-        >
+        <a href={getLocalePath('en')} class:list={[{ active: !isNL }]}>English</a>
       </li>
       <li>
-        <a href={getRelativeLocaleUrl('nl')} class:list={[{ active: Astro.currentLocale === 'nl' }]}
-          >Nederlands</a
-        >
+        <a href={getLocalePath('nl')} class:list={[{ active: isNL }]}>Nederlands</a>
       </li>
     </ul>
   </div>
@@ -52,11 +59,6 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
       const menuItems = [...dropdown.querySelectorAll('a')] as HTMLAnchorElement[]
       const currentItem = document.activeElement as HTMLElement
 
-      // Debug logs
-      console.log('Current active element:', currentItem)
-      console.log('Is dropdown open:', isDropdownOpen)
-      console.log('Menu items:', menuItems)
-
       switch (event.key) {
         case 'ArrowDown':
           if (!isDropdownOpen && currentItem === trigger) {
@@ -65,7 +67,6 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 
             requestAnimationFrame(() => {
               const firstItem = dropdown.querySelector('a') as HTMLElement
-              console.log('Focusing first item:', firstItem)
               firstItem?.focus()
               updateAriaAttributes()
             })
